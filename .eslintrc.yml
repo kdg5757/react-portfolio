@@ -14,6 +14,7 @@ parserOptions:
 plugins:
   - react
   - '@typescript-eslint'
+  - 'react-hooks'
 ignores: [
   "!node_modules/",           // unignore `node_modules/` directory
   "node_modules/*",           // ignore its content
@@ -60,3 +61,5 @@ rules:
   no-whitespace-before-property: error
   semi-spacing: error
   semi-style: ["error", "last"]
+  react-hooks/rules-of-hooks: error
+  react-hooks/exhaustive-deps: warn
