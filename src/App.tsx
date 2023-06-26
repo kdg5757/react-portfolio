@@ -6,7 +6,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { MainRoute } from "./constants/Routes";
 import { theme } from './theme';
 
-const App: React.FC = () => {
+type Props = Record<string, never>;
+
+const App: React.FC<Props> = () => {
   const router = createBrowserRouter(MainRoute);
   
   return (

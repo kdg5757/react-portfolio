@@ -1,4 +1,6 @@
-const TopPage: React.FC = () => {
+type Props = Record<string, never>;
+
+const TopPage: React.FC<Props> = () => {
   return (
     <>
       Top
