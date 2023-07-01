@@ -2,61 +2,104 @@ env:
   browser: true
   es2021: true
   node: true
+ignorePatterns:
+  - '*/**/*.d.ts'
+  - '**/*.css'
+  - '**/*.scss'
+  - '**/*.less'
+  - '**/*.yml'
+  - '**/*.yaml'
+  - '**/*.lock'
 extends:
   - eslint:recommended
   - plugin:react/recommended
   - plugin:@typescript-eslint/recommended
-overrides: []
+  - plugin:react-hooks/recommended
+  - plugin:sonarjs/recommended
+  - prettier
 parser: '@typescript-eslint/parser'
 parserOptions:
+  ecmaFeatures:
+    jsx: true
   ecmaVersion: latest
   sourceType: module
 plugins:
   - react
   - '@typescript-eslint'
-ignores: [
-  "!node_modules/",           // unignore `node_modules/` directory
-  "node_modules/*",           // ignore its content
-  "!node_modules/mylibrary/"  // unignore `node_modules/mylibrary` directory
-]
+  - simple-import-sort
+  - sonarijs
+  - react-hooks
+  - unused-imports
 rules:
-  no-constant-binary-expression: error
-  no-constructor-return: error
-  no-duplicate-imports: error
-  no-irregular-whitespace: ["error", { "skipComments": true, "skipRegExps": true, "skipJSXText": true }]
-  no-self-compare: error
-  no-template-curly-in-string: error
-  no-unreachable-loop: error
-  no-use-before-define: error
-  require-atomic-updates: error
-  block-scoped-var: error
-  complexity: [ "error", 16 ]
-  default-case-last: error
-  default-param-last: error
-  eqeqeq: error
-  max-depth: ["error", 4]
-  max-lines-per-function: ["error", 16]
-  no-else-return: error
-  no-empty-function: error
-  no-empty-static-block: error
-  no-eq-null: error
-  no-floating-decimal: error
-  no-invalid-this: error
-  no-label-var: error
-  no-lone-blocks: error
-  no-lonely-if: error
-  no-loop-func: error
-  no-magic-numbers: error
-  no-mixed-operators: error
-  no-multi-assign: error
-  no-nested-ternary: error
-  brace-style: error
-  func-call-spacing: error
-  function-call-argument-newline: error
-  function-paren-newline: ["error", "always"]
-  jsx-quotes: ["error", "prefer-double"]
-  key-spacing: ["error", { "beforeColon": false, "afterColon": true }]
-  lines-between-class-members: ["error", "always"]
-  no-whitespace-before-property: error
-  semi-spacing: error
-  semi-style: ["error", "last"]
+  react/jsx-uses-react: off
+  react/react-in-jsx-scope: off
+  "@typescript-eslint/no-explicit-any": error
+  no-unused-vars: off
+  "@typescript-eslint/no-unused-vars":
+    - error
+    - args: all
+      argsIgnorePattern: "^_$|props"
+      varsIgnorePattern: "^_$|^_"
+  "unused-imports/no-unused-imports": error
+  react/jsx-boolean-value: warn
+  react/jsx-curly-brace-presence: error
+  react/self-closing-comp:
+    - error
+    - component: true
+      html: true
+  react/prop-types: off
+  prefer-template: warn
+  arrow-body-style:
+    - warn
+    - always
+  react/jsx-pascal-case: error
+  jsx-quotes:
+    - warn
+    - prefer-double
+  react/jsx-props-no-spreading: off
+  no-empty-pattern: warn
+  "@typescript-eslint/consistent-type-definitions":
+    - warn
+    - type
+  react-hooks/exhaustive-deps:
+    - warn
+    - additionalHooks: "(useRecoilCallback|useRecoilTransaction_UNSTABLE)"
+  "@typescript-eslint/explicit-function-return-type": warn
+  "@typescript-eslint/no-empty-function": off
+  simple-import-sort/imports:
+    - error
+    - groups:
+      - - "^react"
+      - - "^antd"
+        - "^ant-design/icons"
+        - "^@?\\w"
+      - - "~/(.*)"
+      - - "./"
+      - - "./*.module.scss"
+        - "./*.module.css"
+        - "./*.module.less"
+        - "./*.scss"
+        - "./*.css"
+        - "./*.less"
+  no-useless-catch: off
+  curly:
+    - error
+    - all
+  no-plusplus:
+    - error
+settings:
+  react:
+    version: detect
+  import/resolver:
+    alias:
+      map:
+        - "~": "./src/"
+overrides:
+  - files:
+      - '**/__test__/**/*.+(ts|tsx|js)'
+      - '**/?(*.)+(spec|test).+(ts|tsx|js)'
+    extends:
+      - plugin:jest-dom/recommended
+      - plugin:testing-library/react
+  - files:
+      - '*.stories.@(ts|tsx|js)'
